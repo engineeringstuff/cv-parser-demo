@@ -24,6 +24,5 @@
   "vars": {
     "ENVIRONMENT": "development",
     "NODE_ENV": "development",
-    "OPENAI_API_KEY": "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",
   },
 }
