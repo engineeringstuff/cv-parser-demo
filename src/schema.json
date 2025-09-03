@@ -1,0 +1,384 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RChilli Resume Parser Response Schema",
+  "description": "A JSON schema for the RChilli Resume Parser API response.",
+  "type": "object",
+  "properties": {
+    "ResumeParserData": {
+      "type": "object",
+      "properties": {
+        "ResumeFileName": { "type": "string" },
+        "ResumeLanguage": {
+          "type": "object",
+          "properties": {
+            "Language": { "type": "string" },
+            "LanguageCode": { "type": "string" }
+          }
+        },
+        "ParsingDate": { "type": "string" },
+        "ResumeCountry": {
+          "type": "object",
+          "properties": {
+            "Country": { "type": "string" },
+            "Evidence": { "type": "string" },
+            "CountryCode": {
+              "type": "object",
+              "properties": {
+                "IsoAlpha2": { "type": "string" },
+                "IsoAlpha3": { "type": "string" },
+                "UNCode": { "type": "string" }
+              }
+            }
+          }
+        },
+        "Name": {
+          "type": "object",
+          "properties": {
+            "FullName": { "type": "string" },
+            "TitleName": { "type": "string" },
+            "FirstName": { "type": "string" },
+            "MiddleName": { "type": "string" },
+            "LastName": { "type": "string" },
+            "FormattedName": { "type": "string" },
+            "ConfidenceScore": { "type": "integer" }
+          }
+        },
+        "DateOfBirth": { "type": "string" },
+        "Gender": { "type": "string" },
+        "FatherName": { "type": "string" },
+        "MotherName": { "type": "string" },
+        "MaritalStatus": { "type": "string" },
+        "Nationality": { "type": "string" },
+        "LanguageKnown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Language": { "type": "string" },
+              "LanguageCode": { "type": "string" }
+            }
+          }
+        },
+        "UniqueID": { "type": "string" },
+        "LicenseNo": { "type": "string" },
+        "PassportDetail": {
+          "type": "object",
+          "properties": {
+            "PassportNumber": { "type": "string" },
+            "DateOfExpiry": { "type": "string" },
+            "DateOfIssue": { "type": "string" },
+            "PlaceOfIssue": { "type": "string" }
+          }
+        },
+        "PanNo": { "type": "string" },
+        "VisaStatus": { "type": "string" },
+        "Email": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "EmailAddress": { "type": "string" },
+              "ConfidenceScore": { "type": "integer" }
+            }
+          }
+        },
+        "PhoneNumber": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Number": { "type": "string" },
+              "ISDCode": { "type": "string" },
+              "OriginalNumber": { "type": "string" },
+              "FormattedNumber": { "type": "string" },
+              "Type": { "type": "string" },
+              "ConfidenceScore": { "type": "integer" }
+            }
+          }
+        },
+        "WebSite": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Type": { "type": "string" },
+              "Url": { "type": "string" }
+            }
+          }
+        },
+        "Address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Street": { "type": "string" },
+              "City": { "type": "string" },
+              "State": { "type": "string" },
+              "StateIsoCode": { "type": "string" },
+              "Country": { "type": "string" },
+              "CountryCode": {
+                "type": "object",
+                "properties": {
+                  "IsoAlpha2": { "type": "string" },
+                  "IsoAlpha3": { "type": "string" },
+                  "UNCode": { "type": "string" }
+                }
+              },
+              "ZipCode": { "type": "string" },
+              "FormattedAddress": { "type": "string" },
+              "Type": { "type": "string" },
+              "ConfidenceScore": { "type": "integer" }
+            }
+          }
+        },
+        "Category": { "type": "string" },
+        "SubCategory": { "type": "string" },
+        "CurrentSalary": {
+          "type": "object",
+          "properties": {
+            "Amount": { "type": "string" },
+            "Symbol": { "type": "string" },
+            "Currency": { "type": "string" },
+            "Unit": { "type": "string" },
+            "Text": { "type": "string" }
+          }
+        },
+        "ExpectedSalary": {
+          "type": "object",
+          "properties": {
+            "Amount": { "type": "string" },
+            "Symbol": { "type": "string" },
+            "Currency": { "type": "string" },
+            "Unit": { "type": "string" },
+            "Text": { "type": "string" }
+          }
+        },
+        "Qualification": { "type": "string" },
+        "SegregatedQualification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Institution": {
+                "type": "object",
+                "properties": {
+                  "Name": { "type": "string" },
+                  "Type": { "type": "string" },
+                  "ConfidenceScore": { "type": "integer" },
+                  "Location": {
+                    "type": "object",
+                    "properties": {
+                      "City": { "type": "string" },
+                      "State": { "type": "string" },
+                      "StateIsoCode": { "type": "string" },
+                      "Country": { "type": "string" },
+                      "CountryCode": {
+                        "type": "object",
+                        "properties": {
+                          "IsoAlpha2": { "type": "string" },
+                          "IsoAlpha3": { "type": "string" },
+                          "UNCode": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Degree": {
+                "type": "object",
+                "properties": {
+                  "DegreeName": { "type": "string" },
+                  "NormalizeDegree": { "type": "string" },
+                  "Specialization": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "ConfidenceScore": { "type": "integer" }
+                }
+              },
+              "FormattedDegreePeriod": { "type": "string" },
+              "StartDate": { "type": "string" },
+              "EndDate": { "type": "string" },
+              "Aggregate": {
+                "type": "object",
+                "properties": {
+                  "Value": { "type": "string" },
+                  "MeasureType": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "Certification": { "type": "string" },
+        "SegregatedCertification": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "CertificationTitle": { "type": "string" },
+              "Authority": { "type": "string" },
+              "CertificationCode": { "type": "string" },
+              "IsExpiry": { "type": "string" },
+              "StartDate": { "type": "string" },
+              "EndDate": { "type": "string" },
+              "CertificationUrl": { "type": "string" }
+            }
+          }
+        },
+        "SkillBlock": { "type": "string" },
+        "SkillKeywords": { "type": "string" },
+        "SegregatedSkill": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Type": { "type": "string" },
+              "Skill": { "type": "string" },
+              "Ontology": { "type": "string" },
+              "Alias": { "type": "string" },
+              "FormattedName": { "type": "string" },
+              "Evidence": { "type": "string" },
+              "LastUsed": { "type": "string" },
+              "ExperienceInMonths": { "type": "integer" }
+            }
+          }
+        },
+        "Experience": { "type": "string" },
+        "SegregatedExperience": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "Employer": {
+                "type": "object",
+                "properties": {
+                  "EmployerName": { "type": "string" },
+                  "FormattedName": { "type": "string" },
+                  "ConfidenceScore": { "type": "integer" }
+                }
+              },
+              "JobProfile": {
+                "type": "object",
+                "properties": {
+                  "Title": { "type": "string" },
+                  "FormattedName": { "type": "string" },
+                  "Alias": { "type": "string" },
+                  "RelatedSkills": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Skill": { "type": "string" },
+                        "ProficiencyLevel": { "type": "string" }
+                      }
+                    }
+                  },
+                  "ConfidenceScore": { "type": "integer" }
+                }
+              },
+              "Location": {
+                "type": "object",
+                "properties": {
+                  "City": { "type": "string" },
+                  "State": { "type": "string" },
+                  "StateIsoCode": { "type": "string" },
+                  "Country": { "type": "string" },
+                  "CountryCode": {
+                    "type": "object",
+                    "properties": {
+                      "IsoAlpha2": { "type": "string" },
+                      "IsoAlpha3": { "type": "string" },
+                      "UNCode": { "type": "string" }
+                    }
+                  }
+                }
+              },
+              "JobPeriod": { "type": "string" },
+              "FormattedJobPeriod": { "type": "string" },
+              "StartDate": { "type": "string" },
+              "EndDate": { "type": "string" },
+              "IsCurrentEmployer": { "type": "string" },
+              "JobDescription": { "type": "string" }
+            }
+          }
+        },
+        "CurrentEmployer": { "type": "string" },
+        "JobProfile": { "type": "string" },
+        "WorkedPeriod": {
+          "type": "object",
+          "properties": {
+            "TotalExperienceInMonths": { "type": "string" },
+            "TotalExperienceInYear": { "type": "string" },
+            "TotalExperienceRange": { "type": "string" }
+          }
+        },
+        "GapPeriod": { "type": "string" },
+        "AverageStay": { "type": "string" },
+        "LongestStay": { "type": "string" },
+        "Summary": { "type": "string" },
+        "ExecutiveSummary": { "type": "string" },
+        "ManagementSummary": { "type": "string" },
+        "Coverletter": { "type": "string" },
+        "Publication": { "type": "string" },
+        "CurrentLocation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "City": { "type": "string" },
+              "State": { "type": "string" },
+              "StateIsoCode": { "type": "string" },
+              "Country": { "type": "string" },
+              "CountryCode": {
+                "type": "object",
+                "properties": {
+                  "IsoAlpha2": { "type": "string" },
+                  "IsoAlpha3": { "type": "string" },
+                  "UNCode": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "PreferredLocation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "City": { "type": "string" },
+              "State": { "type": "string" },
+              "StateIsoCode": { "type": "string" },
+              "Country": { "type": "string" },
+              "CountryCode": {
+                "type": "object",
+                "properties": {
+                  "IsoAlpha2": { "type": "string" },
+                  "IsoAlpha3": { "type": "string" },
+                  "UNCode": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "Availability": { "type": "string" },
+        "Hobbies": { "type": "string" },
+        "Objectives": { "type": "string" },
+        "Achievements": { "type": "string" },
+        "SegregatedAchievement": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "AwardTitle": { "type": "string" },
+              "Issuer": { "type": "string" },
+              "AssociatedWith": { "type": "string" },
+              "IssuingDate": { "type": "string" },
+              "Description": { "type": "string" }
+            }
+          }
+        },
+        "References": { "type": "string" }
+      }
+    }
+  }
+}
