@@ -4,8 +4,19 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import OpenAI from "openai";
 import type {
   ChatCompletionContentPart,
+  ChatCompletionCreateParamsNonStreaming,
   ChatCompletionMessageParam,
+  ReasoningEffort,
 } from "openai/resources";
+
+const pricingGrid: Record<string, { input: number; output: number }> = {
+  "gpt-5-mini": { input: 0.125e-6, output: 1e-6 },
+  "gpt-5": { input: 0.625e-6, output: 5e-6 },
+  "gpt-4o-mini": { input: 0.075e-6, output: 0.3e-6 },
+  "gpt-4o": { input: 0.125e-6, output: 5e-6 },
+  "gpt-4.1": { input: 1e-6, output: 4e-6 },
+  "gpt-4.1-mini": { input: 0.2e-6, output: 0.8e-6 },
+};
 
 const pdfToDataUrl = async (data: Uint8Array<ArrayBuffer>): Promise<string> => {
   const base64String = Buffer.from(data).toString("base64");
@@ -85,6 +96,33 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
       <form method="POST" action="/parse" enctype="multipart/form-data">
         <label><strong>PDF CV</strong> (only .pdf)</label>
         <input type="file" name="file" accept="application/pdf,.pdf" required />
+
+        <label><strong>Model:</strong></label>
+        <select name="model" id="model">
+          <option value="gpt-5-mini" selected>gpt-5-mini</option>
+          <option value="gpt-5">gpt-5</option>
+          <option value="gpt-4o-mini">gpt-4o-mini</option>
+          <option value="gpt-4o">gpt-4o</option>
+          <option value="gpt-4.1">gpt-4.1</option>
+          <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+        </select>
+        <sub>Pricing information can be found <a href="https://platform.openai.com/docs/pricing?latest-pricing=batch" target="_blank" rel="noopener noreferrer">here</a></sub>
+
+        <label><strong>Reasoning Effort:</strong></label>
+        <select name="reasoning_effort" id="reasoning_effort">
+          <option value="minimal">Minimal</option>
+          <option value="low" selected>Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+
+        <label><strong>Verbosity:</strong></label>
+        <select name="verbosity" id="verbosity">
+          <option value="low">Low</option>
+          <option value="medium" selected>Medium</option>
+          <option value="high">High</option>
+        </select>
+
         <button type="submit">Upload & Parse</button>
       </form>
     `;
@@ -96,6 +134,13 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
     try {
       const form = await c.req.parseBody();
       const file = form["file"] as File | undefined;
+      const model = form["model"] as string | undefined;
+      const reasoning_effort = form["reasoning_effort"] as
+        | ReasoningEffort
+        | undefined;
+      const verbosity = form["verbosity"] as
+        | ("low" | "medium" | "high")
+        | undefined;
       if (!file) {
         return c.html(uploadLayout("Error", `<p>No file uploaded.</p>`), 400);
       }
@@ -140,26 +185,31 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
         },
       ];
 
-      const response = await client.chat.completions.create(
-        {
-          model: "gpt-5-mini",
-          messages: input,
-          response_format: {
-            type: "json_schema",
-            json_schema: { name: "resume", schema },
-          },
-          // service_tier: "flex",
+      const options: ChatCompletionCreateParamsNonStreaming = {
+        model: model || "gpt-5-mini",
+        messages: input,
+        response_format: {
+          type: "json_schema",
+          json_schema: { name: "resume", schema },
         },
-        { timeout: 15 * 1000 * 60 }
-      );
+        // service_tier: "flex",
+      };
 
-      console.log(JSON.stringify(response, null, 2));
+      if (model == "gpt-5" || model == "gpt-5-mini") {
+        options.reasoning_effort = reasoning_effort || "medium";
+        options.verbosity = verbosity || "medium";
+      }
+
+      const response = await client.chat.completions.create(options, {
+        timeout: 15 * 1000 * 60,
+      });
 
       // Extract structured JSON text (SDK provides output_text and output_parsed)
-      const jsonText = response.choices[0].message.content || "";
+      let jsonText = response.choices[0].message.content || "";
       let parsed: unknown = undefined;
       try {
         parsed = JSON.parse(jsonText);
+        jsonText = JSON.stringify(parsed, null, 2);
       } catch (e) {
         console.error(e);
       }
@@ -168,15 +218,21 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
       const usage = response.usage;
       const inputTokens = usage?.prompt_tokens ?? 0;
       const outputTokens = usage?.completion_tokens ?? 0;
-      const cost = inputTokens * 0.125e-6 + outputTokens * 1.0e-6; // $ per token based on given rates
+      const pricing = pricingGrid[model || "gpt-5-mini"];
+      const cost = inputTokens * pricing.input + outputTokens * pricing.output; // $ per token based on given rates
 
       const escapeHtml = (s: string) =>
         s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
       const body = `
-        <p>
-          <span class="badge">File:</span> ${filename}
+        <h2>Usage & Cost</h2>
+        <p class="muted">
+          Using Model: ${model || "gpt-5-mini"}<br />
+          Reasoning Effort: ${reasoning_effort || "medium"}<br />
+          Input tokens: ${inputTokens.toLocaleString()} | Output tokens: ${outputTokens.toLocaleString()}<br />
+          Estimated cost: $${cost.toFixed(6)} (rates: $${(pricing.input * 1e6).toFixed(3)}/M input, $${(pricing.output * 1e6).toFixed(3)}/M output)
         </p>
+        <p><a href="/">&#8592; Upload another PDF</a></p>
         <h2>Parsed JSON</h2>
         <div class="grid">
           <div>
@@ -188,12 +244,6 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
             ${parsed ? renderObj(parsed) : "<p>Unable to parse JSON response.</p>"}
           </div>
         </div>
-        <h2>Usage & Cost</h2>
-        <p class="muted">
-          Input tokens: ${inputTokens.toLocaleString()} | Output tokens: ${outputTokens.toLocaleString()}<br />
-          Estimated cost: $${cost.toFixed(6)} (rates: $0.125/M input, $1.00/M output)
-        </p>
-        <p><a href="/">&#8592; Upload another PDF</a></p>
       `;
 
       return c.html(uploadLayout("Parsed CV", body));
