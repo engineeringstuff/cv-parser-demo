@@ -55,7 +55,7 @@ const uploadLayout = (title: string, body: string): string => {
       <div class="container">
         <header>
           <h1>CV Parser Demo</h1>
-          <p class="muted">Upload a PDF CV. It will be converted to images (max width 1024) and parsed to JSON using OpenAI.</p>
+          <p class="muted">Upload and parse a PDF CV.</p>
         </header>
         ${body}
       </div>
@@ -96,6 +96,25 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
       <form method="POST" action="/parse" enctype="multipart/form-data">
         <label><strong>PDF CV</strong> (only .pdf)</label>
         <input type="file" name="file" accept="application/pdf,.pdf" required />
+
+        <input type="hidden" name="model" value="gpt-4.1-mini" />
+        <input type="hidden" name="reasoning_effort" value="medium" />
+        <input type="hidden" name="verbosity" value="medium" />
+
+        <button type="submit">Upload & Parse</button>
+      </form>
+    `;
+    return c.html(uploadLayout("Upload CV", body));
+  });
+
+  // GET: Upload page
+  app.get("/debug", (c) => {
+    const body = `
+      <form method="POST" action="/parse" enctype="multipart/form-data">
+        <label><strong>PDF CV</strong> (only .pdf)</label>
+        <input type="file" name="file" accept="application/pdf,.pdf" required />
+
+        <input type="hidden" name="debug" value="true" />
 
         <label><strong>Model:</strong></label>
         <select name="model" id="model">
@@ -141,6 +160,7 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
       const verbosity = form["verbosity"] as
         | ("low" | "medium" | "high")
         | undefined;
+      const debug = form["debug"] == "true";
       if (!file) {
         return c.html(uploadLayout("Error", `<p>No file uploaded.</p>`), 400);
       }
@@ -191,7 +211,7 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
         messages: input,
         response_format: {
           type: "json_schema",
-          json_schema: { name: "resume", schema, strict: true },
+          json_schema: { name: "resume", schema, strict: true,  },
         },
         // service_tier: "flex",
       };
@@ -225,14 +245,14 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
       const escapeHtml = (s: string) =>
         s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-      const body = `
-        <h2>Usage & Cost</h2>
-        <p class="muted">
-          Using Model: ${model || "gpt-5-mini"}<br />
-          Reasoning Effort: ${reasoning_effort || "medium"}<br />
-          Input tokens: ${inputTokens.toLocaleString()} | Output tokens: ${outputTokens.toLocaleString()}<br />
-          Estimated cost: $${cost.toFixed(6)} (rates: $${(pricing.input * 1e6).toFixed(3)}/M input, $${(pricing.output * 1e6).toFixed(3)}/M output)
-        </p>
+      const usageInfo = `<h2>Usage & Cost</h2>
+      <p class="muted">
+        Using Model: ${model || "gpt-5-mini"}<br />
+        Reasoning Effort: ${reasoning_effort || "medium"}<br />
+        Input tokens: ${inputTokens.toLocaleString()} | Output tokens: ${outputTokens.toLocaleString()}<br />
+        Estimated cost: $${cost.toFixed(6)} (rates: $${(pricing.input * 1e6).toFixed(3)}/M input, $${(pricing.output * 1e6).toFixed(3)}/M output)
+      </p>`;
+      const body = `${debug ? usageInfo : ""}
         <p><a href="/">&#8592; Upload another PDF</a></p>
         <h2>Parsed JSON</h2>
         <div class="grid">

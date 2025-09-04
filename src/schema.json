@@ -2,14 +2,17 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "RChilli Resume Parser Response Schema",
   "description": "A JSON schema for the RChilli Resume Parser API response.",
+  "additionalProperties": false,
   "type": "object",
   "properties": {
     "ResumeParserData": {
       "type": "object",
+      "additionalProperties": false,
       "properties": {
         "ResumeFileName": { "type": "string" },
         "ResumeLanguage": {
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "Language": { "type": "string" },
             "LanguageCode": { "type": "string" }
@@ -18,11 +21,13 @@
         "ParsingDate": { "type": "string" },
         "ResumeCountry": {
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "Country": { "type": "string" },
             "Evidence": { "type": "string" },
             "CountryCode": {
               "type": "object",
+              "additionalProperties": false,
               "properties": {
                 "IsoAlpha2": { "type": "string" },
                 "IsoAlpha3": { "type": "string" },
@@ -33,6 +38,7 @@
         },
         "Name": {
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "FullName": { "type": "string" },
             "TitleName": { "type": "string" },
@@ -53,6 +59,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "Language": { "type": "string" },
               "LanguageCode": { "type": "string" }
@@ -63,6 +70,7 @@
         "LicenseNo": { "type": "string" },
         "PassportDetail": {
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "PassportNumber": { "type": "string" },
             "DateOfExpiry": { "type": "string" },
@@ -76,6 +84,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "EmailAddress": { "type": "string" },
               "ConfidenceScore": { "type": "integer" }
@@ -86,6 +95,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "Number": { "type": "string" },
               "ISDCode": { "type": "string" },
@@ -100,6 +110,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "Type": { "type": "string" },
               "Url": { "type": "string" }
@@ -110,6 +121,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "Street": { "type": "string" },
               "City": { "type": "string" },
@@ -118,6 +130,7 @@
               "Country": { "type": "string" },
               "CountryCode": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "IsoAlpha2": { "type": "string" },
                   "IsoAlpha3": { "type": "string" },
@@ -135,6 +148,7 @@
         "SubCategory": { "type": "string" },
         "CurrentSalary": {
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "Amount": { "type": "string" },
             "Symbol": { "type": "string" },
@@ -145,6 +159,7 @@
         },
         "ExpectedSalary": {
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "Amount": { "type": "string" },
             "Symbol": { "type": "string" },
@@ -158,15 +173,18 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "Institution": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "Name": { "type": "string" },
                   "Type": { "type": "string" },
                   "ConfidenceScore": { "type": "integer" },
                   "Location": {
                     "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                       "City": { "type": "string" },
                       "State": { "type": "string" },
@@ -174,6 +192,7 @@
                       "Country": { "type": "string" },
                       "CountryCode": {
                         "type": "object",
+                        "additionalProperties": false,
                         "properties": {
                           "IsoAlpha2": { "type": "string" },
                           "IsoAlpha3": { "type": "string" },
@@ -186,6 +205,7 @@
               },
               "Degree": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "DegreeName": { "type": "string" },
                   "NormalizeDegree": { "type": "string" },
@@ -201,6 +221,7 @@
               "EndDate": { "type": "string" },
               "Aggregate": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "Value": { "type": "string" },
                   "MeasureType": { "type": "string" }
@@ -214,6 +235,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "CertificationTitle": { "type": "string" },
               "Authority": { "type": "string" },
@@ -231,6 +253,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "Type": { "type": "string" },
               "Skill": { "type": "string" },
@@ -248,9 +271,11 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "Employer": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "EmployerName": { "type": "string" },
                   "FormattedName": { "type": "string" },
@@ -259,6 +284,7 @@
               },
               "JobProfile": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "Title": { "type": "string" },
                   "FormattedName": { "type": "string" },
@@ -267,6 +293,7 @@
                     "type": "array",
                     "items": {
                       "type": "object",
+                      "additionalProperties": false,
                       "properties": {
                         "Skill": { "type": "string" },
                         "ProficiencyLevel": { "type": "string" }
@@ -278,6 +305,7 @@
               },
               "Location": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "City": { "type": "string" },
                   "State": { "type": "string" },
@@ -285,6 +313,7 @@
                   "Country": { "type": "string" },
                   "CountryCode": {
                     "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                       "IsoAlpha2": { "type": "string" },
                       "IsoAlpha3": { "type": "string" },
@@ -306,6 +335,7 @@
         "JobProfile": { "type": "string" },
         "WorkedPeriod": {
           "type": "object",
+          "additionalProperties": false,
           "properties": {
             "TotalExperienceInMonths": { "type": "string" },
             "TotalExperienceInYear": { "type": "string" },
@@ -324,6 +354,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "City": { "type": "string" },
               "State": { "type": "string" },
@@ -331,6 +362,7 @@
               "Country": { "type": "string" },
               "CountryCode": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "IsoAlpha2": { "type": "string" },
                   "IsoAlpha3": { "type": "string" },
@@ -344,6 +376,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "City": { "type": "string" },
               "State": { "type": "string" },
@@ -351,6 +384,7 @@
               "Country": { "type": "string" },
               "CountryCode": {
                 "type": "object",
+                "additionalProperties": false,
                 "properties": {
                   "IsoAlpha2": { "type": "string" },
                   "IsoAlpha3": { "type": "string" },
@@ -368,6 +402,7 @@
           "type": "array",
           "items": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
               "AwardTitle": { "type": "string" },
               "Issuer": { "type": "string" },
