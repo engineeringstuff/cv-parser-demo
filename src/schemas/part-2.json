@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RChilli Resume Parser Response Schema",
+  "description": "A JSON schema for the RChilli Resume Parser API response.",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "ResumeParserData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Certification": { "type": ["string", "null"] },
+        "SegregatedCertification": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "CertificationTitle": { "type": "string" },
+              "Authority": { "type": ["string", "null"] },
+              "CertificationCode": { "type": ["string", "null"] },
+              "IsExpiry": { "type": ["string", "null"] },
+              "StartDate": { "type": ["string", "null"] },
+              "EndDate": { "type": ["string", "null"] },
+              "CertificationUrl": { "type": ["string", "null"] }
+            },
+            "required": [
+              "CertificationTitle",
+              "Authority",
+              "CertificationCode",
+              "IsExpiry",
+              "StartDate",
+              "EndDate",
+              "CertificationUrl"
+            ]
+          }
+        },
+        "SkillBlock": { "type": "string" },
+        "SkillKeywords": { "type": "string" },
+        "SegregatedSkill": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "Type": { "type": "string" },
+              "Skill": { "type": "string" },
+              "Ontology": { "type": ["string", "null"] },
+              "Alias": { "type": ["string", "null"] },
+              "FormattedName": { "type": "string" },
+              "Evidence": { "type": "string" },
+              "LastUsed": { "type": "string" },
+              "ExperienceInMonths": { "type": "integer" }
+            },
+            "required": [
+              "Type",
+              "Skill",
+              "Ontology",
+              "Alias",
+              "FormattedName",
+              "Evidence",
+              "LastUsed",
+              "ExperienceInMonths"
+            ]
+          }
+        }
+      },
+      "required": [
+        "Certification",
+        "SegregatedCertification",
+        "SkillBlock",
+        "SkillKeywords",
+        "SegregatedSkill"
+      ]
+    }
+  },
+  "required": ["ResumeParserData"]
+}

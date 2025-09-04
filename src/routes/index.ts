@@ -1,5 +1,5 @@
 import type { Env } from "@/env";
-import schema from "@/schema.json";
+import schema from "@/schemas/complete.json";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import OpenAI from "openai";
 import type {
@@ -61,6 +61,46 @@ const uploadLayout = (title: string, body: string): string => {
       </div>
     </body>
   </html>`;
+};
+
+const makeRequest = async (
+  client: OpenAI,
+  model: string | undefined,
+  input: ChatCompletionMessageParam[],
+  reasoning_effort: ReasoningEffort | undefined,
+  verbosity: "low" | "medium" | "high" | undefined,
+  schema: Record<string, unknown>
+) => {
+  const options: ChatCompletionCreateParamsNonStreaming = {
+    model: model || "gpt-5-mini",
+    messages: input,
+    response_format: {
+      type: "json_schema",
+      json_schema: { name: "resume", schema, strict: true },
+    },
+    // service_tier: "flex",
+  };
+
+  if (model == "gpt-5" || model == "gpt-5-mini") {
+    options.reasoning_effort = reasoning_effort || "medium";
+    options.verbosity = verbosity || "medium";
+  }
+
+  const response = await client.chat.completions.create(options, {
+    timeout: 15 * 1000 * 60,
+  });
+
+  // Extract structured JSON text (SDK provides output_text and output_parsed)
+  let jsonText = response.choices[0].message.content || "";
+  let parsed: unknown = undefined;
+  try {
+    parsed = JSON.parse(jsonText);
+    jsonText = JSON.stringify(parsed, null, 2);
+  } catch (e) {
+    console.error(e);
+  }
+
+  return { jsonText, parsed, usage: response.usage };
 };
 
 const renderObj = (obj: unknown): string => {
@@ -206,37 +246,16 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
       ];
 
       // See https://platform.openai.com/docs/guides/structured-outputs?example=ui-generation&type-restrictions=string-restrictions#supported-schemas
-      const options: ChatCompletionCreateParamsNonStreaming = {
-        model: model || "gpt-5-mini",
-        messages: input,
-        response_format: {
-          type: "json_schema",
-          json_schema: { name: "resume", schema, strict: true,  },
-        },
-        // service_tier: "flex",
-      };
-
-      if (model == "gpt-5" || model == "gpt-5-mini") {
-        options.reasoning_effort = reasoning_effort || "medium";
-        options.verbosity = verbosity || "medium";
-      }
-
-      const response = await client.chat.completions.create(options, {
-        timeout: 15 * 1000 * 60,
-      });
-
-      // Extract structured JSON text (SDK provides output_text and output_parsed)
-      let jsonText = response.choices[0].message.content || "";
-      let parsed: unknown = undefined;
-      try {
-        parsed = JSON.parse(jsonText);
-        jsonText = JSON.stringify(parsed, null, 2);
-      } catch (e) {
-        console.error(e);
-      }
+      const { jsonText, parsed, usage } = await makeRequest(
+        client,
+        model,
+        input,
+        reasoning_effort,
+        verbosity,
+        schema
+      );
 
       // Cost calculation
-      const usage = response.usage;
       const inputTokens = usage?.prompt_tokens ?? 0;
       const outputTokens = usage?.completion_tokens ?? 0;
       const pricing = pricingGrid[model || "gpt-5-mini"];

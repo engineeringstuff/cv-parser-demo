@@ -1,0 +1,278 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RChilli Resume Parser Response Schema",
+  "description": "A JSON schema for the RChilli Resume Parser API response.",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "ResumeParserData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Experience": { "type": "string" },
+        "SegregatedExperience": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "Employer": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "EmployerName": { "type": "string" },
+                  "FormattedName": { "type": "string" },
+                  "ConfidenceScore": { "type": "integer" }
+                },
+                "required": ["EmployerName", "FormattedName", "ConfidenceScore"]
+              },
+              "JobProfile": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "Title": { "type": "string" },
+                  "FormattedName": { "type": "string" },
+                  "Alias": { "type": ["string", "null"] },
+                  "RelatedSkills": {
+                    "type": ["array", "null"],
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "Skill": { "type": "string" },
+                        "ProficiencyLevel": { "type": "string" }
+                      },
+                      "required": ["Skill", "ProficiencyLevel"]
+                    }
+                  },
+                  "ConfidenceScore": { "type": "integer" }
+                },
+                "required": [
+                  "Title",
+                  "FormattedName",
+                  "Alias",
+                  "RelatedSkills",
+                  "ConfidenceScore"
+                ]
+              },
+              "Location": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "City": { "type": ["string", "null"] },
+                  "State": { "type": ["string", "null"] },
+                  "StateIsoCode": { "type": ["string", "null"] },
+                  "Country": { "type": ["string", "null"] },
+                  "CountryCode": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "IsoAlpha2": { "type": "string" },
+                      "IsoAlpha3": { "type": "string" },
+                      "UNCode": { "type": "string" }
+                    },
+                    "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
+                  }
+                },
+                "required": [
+                  "City",
+                  "State",
+                  "StateIsoCode",
+                  "Country",
+                  "CountryCode"
+                ]
+              },
+              "JobPeriod": { "type": ["string", "null"] },
+              "FormattedJobPeriod": { "type": ["string", "null"] },
+              "StartDate": { "type": ["string", "null"] },
+              "EndDate": { "type": ["string", "null"] },
+              "IsCurrentEmployer": { "type": ["string", "null"] },
+              "JobDescription": { "type": ["string", "null"] },
+              "Projects": {
+                "type": ["array", "null"],
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "UsedSkills": { "type": ["string", "null"] },
+                    "ProjectName": { "type": ["string", "null"] },
+                    "TeamSize": { "type": ["string", "null"] }
+                  },
+                  "required": ["UsedSkills", "ProjectName", "TeamSize"]
+                }
+              }
+            },
+            "required": [
+              "Employer",
+              "JobProfile",
+              "Location",
+              "JobPeriod",
+              "FormattedJobPeriod",
+              "StartDate",
+              "EndDate",
+              "IsCurrentEmployer",
+              "JobDescription",
+              "Projects"
+            ]
+          }
+        },
+        "CurrentEmployer": { "type": ["string", "null"] },
+        "JobProfile": { "type": ["string", "null"] },
+        "WorkedPeriod": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "TotalExperienceInMonths": { "type": "string" },
+            "TotalExperienceInYear": { "type": "string" },
+            "TotalExperienceRange": { "type": "string" }
+          },
+          "required": [
+            "TotalExperienceInMonths",
+            "TotalExperienceInYear",
+            "TotalExperienceRange"
+          ]
+        },
+        "GapPeriod": { "type": ["string", "null"] },
+        "AverageStay": { "type": ["string", "null"] },
+        "LongestStay": { "type": ["string", "null"] },
+        "Summary": { "type": "string" },
+        "ExecutiveSummary": { "type": "string" },
+        "ManagementSummary": { "type": "string" },
+        "Coverletter": { "type": ["string", "null"] },
+        "Publication": { "type": ["string", "null"] },
+        "SegregatedPublication": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "PublicationTitle": { "type": "string" },
+              "Publisher": { "type": ["string", "null"] },
+              "PublicationNumber": { "type": ["string", "null"] },
+              "PublicationUrl": { "type": ["string", "null"] },
+              "Authors": { "type": ["string", "null"] },
+              "Description": { "type": "string" }
+            },
+            "required": [
+              "PublicationTitle",
+              "Publisher",
+              "PublicationNumber",
+              "PublicationUrl",
+              "Authors",
+              "Description"
+            ]
+          }
+        },
+        "CurrentLocation": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "City": { "type": ["string", "null"] },
+              "State": { "type": ["string", "null"] },
+              "StateIsoCode": { "type": ["string", "null"] },
+              "Country": { "type": "string" },
+              "CountryCode": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "IsoAlpha2": { "type": "string" },
+                  "IsoAlpha3": { "type": "string" },
+                  "UNCode": { "type": "string" }
+                },
+                "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
+              }
+            },
+            "required": [
+              "City",
+              "State",
+              "StateIsoCode",
+              "Country",
+              "CountryCode"
+            ]
+          }
+        },
+        "PreferredLocation": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "City": { "type": ["string", "null"] },
+              "State": { "type": ["string", "null"] },
+              "StateIsoCode": { "type": ["string", "null"] },
+              "Country": { "type": "string" },
+              "CountryCode": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "IsoAlpha2": { "type": "string" },
+                  "IsoAlpha3": { "type": "string" },
+                  "UNCode": { "type": "string" }
+                },
+                "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
+              }
+            },
+            "required": [
+              "City",
+              "State",
+              "StateIsoCode",
+              "Country",
+              "CountryCode"
+            ]
+          }
+        },
+        "Availability": { "type": ["string", "null"] },
+        "Hobbies": { "type": ["string", "null"] },
+        "Objectives": { "type": ["string", "null"] },
+        "Achievements": { "type": ["string", "null"] },
+        "SegregatedAchievement": {
+          "type": ["array", "null"],
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "AwardTitle": { "type": "string" },
+              "Issuer": { "type": ["string", "null"] },
+              "AssociatedWith": { "type": ["string", "null"] },
+              "IssuingDate": { "type": ["string", "null"] },
+              "Description": { "type": ["string", "null"] }
+            },
+            "required": [
+              "AwardTitle",
+              "Issuer",
+              "AssociatedWith",
+              "IssuingDate",
+              "Description"
+            ]
+          }
+        }
+      },
+      "required": [
+        "Experience",
+        "SegregatedExperience",
+        "CurrentEmployer",
+        "JobProfile",
+        "WorkedPeriod",
+        "GapPeriod",
+        "AverageStay",
+        "LongestStay",
+        "Summary",
+        "ExecutiveSummary",
+        "ManagementSummary",
+        "Coverletter",
+        "Publication",
+        "SegregatedPublication",
+        "CurrentLocation",
+        "PreferredLocation",
+        "Availability",
+        "Hobbies",
+        "Objectives",
+        "Achievements",
+        "SegregatedAchievement"
+      ]
+    }
+  },
+  "required": ["ResumeParserData"]
+}
