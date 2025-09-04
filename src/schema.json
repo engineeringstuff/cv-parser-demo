@@ -9,16 +9,17 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "ResumeFileName": { "type": "string" },
+        "ResumeFileName": { "type": ["string", "null"] },
         "ResumeLanguage": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "Language": { "type": "string" },
             "LanguageCode": { "type": "string" }
-          }
+          },
+          "required": ["Language", "LanguageCode"]
         },
-        "ParsingDate": { "type": "string" },
+        "ParsingDate": { "type": ["string", "null"] },
         "ResumeCountry": {
           "type": "object",
           "additionalProperties": false,
@@ -32,101 +33,129 @@
                 "IsoAlpha2": { "type": "string" },
                 "IsoAlpha3": { "type": "string" },
                 "UNCode": { "type": "string" }
-              }
+              },
+              "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
             }
-          }
+          },
+          "required": ["Country", "Evidence", "CountryCode"]
         },
         "Name": {
           "type": "object",
           "additionalProperties": false,
           "properties": {
             "FullName": { "type": "string" },
-            "TitleName": { "type": "string" },
+            "TitleName": { "type": ["string", "null"] },
             "FirstName": { "type": "string" },
-            "MiddleName": { "type": "string" },
+            "MiddleName": { "type": ["string", "null"] },
             "LastName": { "type": "string" },
             "FormattedName": { "type": "string" },
             "ConfidenceScore": { "type": "integer" }
-          }
+          },
+          "required": [
+            "FullName",
+            "TitleName",
+            "FirstName",
+            "MiddleName",
+            "LastName",
+            "FormattedName",
+            "ConfidenceScore"
+          ]
         },
-        "DateOfBirth": { "type": "string" },
+        "DateOfBirth": { "type": ["string", "null"] },
         "Gender": { "type": "string" },
-        "FatherName": { "type": "string" },
-        "MotherName": { "type": "string" },
-        "MaritalStatus": { "type": "string" },
+        "FatherName": { "type": ["string", "null"] },
+        "MotherName": { "type": ["string", "null"] },
+        "MaritalStatus": { "type": ["string", "null"] },
         "Nationality": { "type": "string" },
         "LanguageKnown": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "Language": { "type": "string" },
               "LanguageCode": { "type": "string" }
-            }
+            },
+            "required": ["Language", "LanguageCode"]
           }
         },
-        "UniqueID": { "type": "string" },
-        "LicenseNo": { "type": "string" },
+        "UniqueID": { "type": ["string", "null"] },
+        "LicenseNo": { "type": ["string", "null"] },
         "PassportDetail": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
-            "PassportNumber": { "type": "string" },
-            "DateOfExpiry": { "type": "string" },
-            "DateOfIssue": { "type": "string" },
-            "PlaceOfIssue": { "type": "string" }
-          }
+            "PassportNumber": { "type": ["string", "null"] },
+            "DateOfExpiry": { "type": ["string", "null"] },
+            "DateOfIssue": { "type": ["string", "null"] },
+            "PlaceOfIssue": { "type": ["string", "null"] }
+          },
+          "required": [
+            "PassportNumber",
+            "DateOfExpiry",
+            "DateOfIssue",
+            "PlaceOfIssue"
+          ]
         },
-        "PanNo": { "type": "string" },
-        "VisaStatus": { "type": "string" },
+        "PanNo": { "type": ["string", "null"] },
+        "VisaStatus": { "type": ["string", "null"] },
         "Email": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "EmailAddress": { "type": "string" },
               "ConfidenceScore": { "type": "integer" }
-            }
+            },
+            "required": ["EmailAddress", "ConfidenceScore"]
           }
         },
         "PhoneNumber": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "Number": { "type": "string" },
-              "ISDCode": { "type": "string" },
+              "ISDCode": { "type": ["string", "null"] },
               "OriginalNumber": { "type": "string" },
               "FormattedNumber": { "type": "string" },
               "Type": { "type": "string" },
               "ConfidenceScore": { "type": "integer" }
-            }
+            },
+            "required": [
+              "Number",
+              "ISDCode",
+              "OriginalNumber",
+              "FormattedNumber",
+              "Type",
+              "ConfidenceScore"
+            ]
           }
         },
         "WebSite": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "Type": { "type": "string" },
               "Url": { "type": "string" }
-            }
+            },
+            "required": ["Type", "Url"]
           }
         },
         "Address": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "Street": { "type": "string" },
-              "City": { "type": "string" },
-              "State": { "type": "string" },
-              "StateIsoCode": { "type": "string" },
+              "Street": { "type": ["string", "null"] },
+              "City": { "type": ["string", "null"] },
+              "State": { "type": ["string", "null"] },
+              "StateIsoCode": { "type": ["string", "null"] },
               "Country": { "type": "string" },
               "CountryCode": {
                 "type": "object",
@@ -135,42 +164,57 @@
                   "IsoAlpha2": { "type": "string" },
                   "IsoAlpha3": { "type": "string" },
                   "UNCode": { "type": "string" }
-                }
+                },
+                "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
               },
-              "ZipCode": { "type": "string" },
+              "ZipCode": { "type": ["string", "null"] },
               "FormattedAddress": { "type": "string" },
               "Type": { "type": "string" },
               "ConfidenceScore": { "type": "integer" }
-            }
+            },
+            "required": [
+              "Street",
+              "City",
+              "State",
+              "StateIsoCode",
+              "Country",
+              "CountryCode",
+              "ZipCode",
+              "FormattedAddress",
+              "Type",
+              "ConfidenceScore"
+            ]
           }
         },
         "Category": { "type": "string" },
         "SubCategory": { "type": "string" },
         "CurrentSalary": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
-            "Amount": { "type": "string" },
-            "Symbol": { "type": "string" },
-            "Currency": { "type": "string" },
-            "Unit": { "type": "string" },
+            "Amount": { "type": ["string", "null"] },
+            "Symbol": { "type": ["string", "null"] },
+            "Currency": { "type": ["string", "null"] },
+            "Unit": { "type": ["string", "null"] },
             "Text": { "type": "string" }
-          }
+          },
+          "required": ["Amount", "Symbol", "Currency", "Unit", "Text"]
         },
         "ExpectedSalary": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
-            "Amount": { "type": "string" },
-            "Symbol": { "type": "string" },
-            "Currency": { "type": "string" },
-            "Unit": { "type": "string" },
+            "Amount": { "type": ["string", "null"] },
+            "Symbol": { "type": ["string", "null"] },
+            "Currency": { "type": ["string", "null"] },
+            "Unit": { "type": ["string", "null"] },
             "Text": { "type": "string" }
-          }
+          },
+          "required": ["Amount", "Symbol", "Currency", "Unit", "Text"]
         },
-        "Qualification": { "type": "string" },
+        "Qualification": { "type": ["string", "null"] },
         "SegregatedQualification": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
@@ -183,12 +227,12 @@
                   "Type": { "type": "string" },
                   "ConfidenceScore": { "type": "integer" },
                   "Location": {
-                    "type": "object",
+                    "type": ["object", "null"],
                     "additionalProperties": false,
                     "properties": {
-                      "City": { "type": "string" },
-                      "State": { "type": "string" },
-                      "StateIsoCode": { "type": "string" },
+                      "City": { "type": ["string", "null"] },
+                      "State": { "type": ["string", "null"] },
+                      "StateIsoCode": { "type": ["string", "null"] },
                       "Country": { "type": "string" },
                       "CountryCode": {
                         "type": "object",
@@ -197,26 +241,35 @@
                           "IsoAlpha2": { "type": "string" },
                           "IsoAlpha3": { "type": "string" },
                           "UNCode": { "type": "string" }
-                        }
+                        },
+                        "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
                       }
-                    }
+                    },
+                    "required": [
+                      "City",
+                      "State",
+                      "StateIsoCode",
+                      "Country",
+                      "CountryCode"
+                    ]
                   }
-                }
+                },
+                "required": ["Name", "Type", "ConfidenceScore", "Location"]
               },
               "SubInstitution": {
-                "type": "object",
+                "type": ["object", "null"],
                 "additionalProperties": false,
                 "properties": {
                   "Name": { "type": "string" },
-                  "Type": { "type": "string" },
+                  "Type": { "type": ["string", "null"] },
                   "ConfidenceScore": { "type": "integer" },
                   "Location": {
                     "type": "object",
                     "additionalProperties": false,
                     "properties": {
-                      "City": { "type": "string" },
-                      "State": { "type": "string" },
-                      "StateIsoCode": { "type": "string" },
+                      "City": { "type": ["string", "null"] },
+                      "State": { "type": ["string", "null"] },
+                      "StateIsoCode": { "type": ["string", "null"] },
                       "Country": { "type": "string" },
                       "CountryCode": {
                         "type": "object",
@@ -225,54 +278,88 @@
                           "IsoAlpha2": { "type": "string" },
                           "IsoAlpha3": { "type": "string" },
                           "UNCode": { "type": "string" }
-                        }
+                        },
+                        "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
                       }
-                    }
+                    },
+                    "required": [
+                      "City",
+                      "State",
+                      "StateIsoCode",
+                      "Country",
+                      "CountryCode"
+                    ]
                   }
-                }
+                },
+                "required": ["Name", "Type", "ConfidenceScore", "Location"]
               },
               "Degree": {
-                "type": "object",
+                "type": ["object", "null"],
                 "additionalProperties": false,
                 "properties": {
                   "DegreeName": { "type": "string" },
-                  "NormalizeDegree": { "type": "string" },
+                  "NormalizeDegree": { "type": ["string", "null"] },
                   "Specialization": {
-                    "type": "array",
+                    "type": ["array", "null"],
                     "items": { "type": "string" }
                   },
                   "ConfidenceScore": { "type": "integer" }
-                }
+                },
+                "required": [
+                  "DegreeName",
+                  "NormalizeDegree",
+                  "Specialization",
+                  "ConfidenceScore"
+                ]
               },
-              "FormattedDegreePeriod": { "type": "string" },
-              "StartDate": { "type": "string" },
-              "EndDate": { "type": "string" },
+              "FormattedDegreePeriod": { "type": ["string", "null"] },
+              "StartDate": { "type": ["string", "null"] },
+              "EndDate": { "type": ["string", "null"] },
               "Aggregate": {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
                   "Value": { "type": "string" },
                   "MeasureType": { "type": "string" }
-                }
+                },
+                "required": ["Value", "MeasureType"]
               }
-            }
+            },
+            "required": [
+              "Institution",
+              "SubInstitution",
+              "Degree",
+              "FormattedDegreePeriod",
+              "StartDate",
+              "EndDate",
+              "Aggregate"
+            ]
           }
         },
-        "Certification": { "type": "string" },
+        "Certification": { "type": ["string", "null"] },
         "SegregatedCertification": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "CertificationTitle": { "type": "string" },
-              "Authority": { "type": "string" },
-              "CertificationCode": { "type": "string" },
-              "IsExpiry": { "type": "string" },
-              "StartDate": { "type": "string" },
-              "EndDate": { "type": "string" },
-              "CertificationUrl": { "type": "string" }
-            }
+              "Authority": { "type": ["string", "null"] },
+              "CertificationCode": { "type": ["string", "null"] },
+              "IsExpiry": { "type": ["string", "null"] },
+              "StartDate": { "type": ["string", "null"] },
+              "EndDate": { "type": ["string", "null"] },
+              "CertificationUrl": { "type": ["string", "null"] }
+            },
+            "required": [
+              "CertificationTitle",
+              "Authority",
+              "CertificationCode",
+              "IsExpiry",
+              "StartDate",
+              "EndDate",
+              "CertificationUrl"
+            ]
           }
         },
         "SkillBlock": { "type": "string" },
@@ -285,13 +372,23 @@
             "properties": {
               "Type": { "type": "string" },
               "Skill": { "type": "string" },
-              "Ontology": { "type": "string" },
-              "Alias": { "type": "string" },
+              "Ontology": { "type": ["string", "null"] },
+              "Alias": { "type": ["string", "null"] },
               "FormattedName": { "type": "string" },
               "Evidence": { "type": "string" },
               "LastUsed": { "type": "string" },
               "ExperienceInMonths": { "type": "integer" }
-            }
+            },
+            "required": [
+              "Type",
+              "Skill",
+              "Ontology",
+              "Alias",
+              "FormattedName",
+              "Evidence",
+              "LastUsed",
+              "ExperienceInMonths"
+            ]
           }
         },
         "Experience": { "type": "string" },
@@ -308,7 +405,8 @@
                   "EmployerName": { "type": "string" },
                   "FormattedName": { "type": "string" },
                   "ConfidenceScore": { "type": "integer" }
-                }
+                },
+                "required": ["EmployerName", "FormattedName", "ConfidenceScore"]
               },
               "JobProfile": {
                 "type": "object",
@@ -316,29 +414,37 @@
                 "properties": {
                   "Title": { "type": "string" },
                   "FormattedName": { "type": "string" },
-                  "Alias": { "type": "string" },
+                  "Alias": { "type": ["string", "null"] },
                   "RelatedSkills": {
-                    "type": "array",
+                    "type": ["array", "null"],
                     "items": {
                       "type": "object",
                       "additionalProperties": false,
                       "properties": {
                         "Skill": { "type": "string" },
                         "ProficiencyLevel": { "type": "string" }
-                      }
+                      },
+                      "required": ["Skill", "ProficiencyLevel"]
                     }
                   },
                   "ConfidenceScore": { "type": "integer" }
-                }
+                },
+                "required": [
+                  "Title",
+                  "FormattedName",
+                  "Alias",
+                  "RelatedSkills",
+                  "ConfidenceScore"
+                ]
               },
               "Location": {
                 "type": "object",
                 "additionalProperties": false,
                 "properties": {
-                  "City": { "type": "string" },
-                  "State": { "type": "string" },
-                  "StateIsoCode": { "type": "string" },
-                  "Country": { "type": "string" },
+                  "City": { "type": ["string", "null"] },
+                  "State": { "type": ["string", "null"] },
+                  "StateIsoCode": { "type": ["string", "null"] },
+                  "Country": { "type": ["string", "null"] },
                   "CountryCode": {
                     "type": "object",
                     "additionalProperties": false,
@@ -346,74 +452,108 @@
                       "IsoAlpha2": { "type": "string" },
                       "IsoAlpha3": { "type": "string" },
                       "UNCode": { "type": "string" }
-                    }
+                    },
+                    "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
                   }
-                }
+                },
+                "required": [
+                  "City",
+                  "State",
+                  "StateIsoCode",
+                  "Country",
+                  "CountryCode"
+                ]
               },
-              "JobPeriod": { "type": "string" },
-              "FormattedJobPeriod": { "type": "string" },
-              "StartDate": { "type": "string" },
-              "EndDate": { "type": "string" },
-              "IsCurrentEmployer": { "type": "string" },
-              "JobDescription": { "type": "string" },
+              "JobPeriod": { "type": ["string", "null"] },
+              "FormattedJobPeriod": { "type": ["string", "null"] },
+              "StartDate": { "type": ["string", "null"] },
+              "EndDate": { "type": ["string", "null"] },
+              "IsCurrentEmployer": { "type": ["string", "null"] },
+              "JobDescription": { "type": ["string", "null"] },
               "Projects": {
-                "type": "array",
+                "type": ["array", "null"],
                 "items": {
                   "type": "object",
                   "additionalProperties": false,
                   "properties": {
-                    "UsedSkills": { "type": "string" },
-                    "ProjectName": { "type": "string" },
-                    "TeamSize": { "type": "string" }
-                  }
+                    "UsedSkills": { "type": ["string", "null"] },
+                    "ProjectName": { "type": ["string", "null"] },
+                    "TeamSize": { "type": ["string", "null"] }
+                  },
+                  "required": ["UsedSkills", "ProjectName", "TeamSize"]
                 }
               }
-            }
+            },
+            "required": [
+              "Employer",
+              "JobProfile",
+              "Location",
+              "JobPeriod",
+              "FormattedJobPeriod",
+              "StartDate",
+              "EndDate",
+              "IsCurrentEmployer",
+              "JobDescription",
+              "Projects"
+            ]
           }
         },
-        "CurrentEmployer": { "type": "string" },
-        "JobProfile": { "type": "string" },
+        "CurrentEmployer": { "type": ["string", "null"] },
+        "JobProfile": { "type": ["string", "null"] },
         "WorkedPeriod": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
             "TotalExperienceInMonths": { "type": "string" },
             "TotalExperienceInYear": { "type": "string" },
             "TotalExperienceRange": { "type": "string" }
-          }
+          },
+          "required": [
+            "TotalExperienceInMonths",
+            "TotalExperienceInYear",
+            "TotalExperienceRange"
+          ]
         },
-        "GapPeriod": { "type": "string" },
-        "AverageStay": { "type": "string" },
-        "LongestStay": { "type": "string" },
+        "GapPeriod": { "type": ["string", "null"] },
+        "AverageStay": { "type": ["string", "null"] },
+        "LongestStay": { "type": ["string", "null"] },
         "Summary": { "type": "string" },
         "ExecutiveSummary": { "type": "string" },
         "ManagementSummary": { "type": "string" },
-        "Coverletter": { "type": "string" },
-        "Publication": { "type": "string" },
+        "Coverletter": { "type": ["string", "null"] },
+        "Publication": { "type": ["string", "null"] },
         "SegregatedPublication": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "PublicationTitle": { "type": "string" },
-              "Publisher": { "type": "string" },
-              "PublicationNumber": { "type": "string" },
-              "PublicationUrl": { "type": "string" },
-              "Authors": { "type": "string" },
+              "Publisher": { "type": ["string", "null"] },
+              "PublicationNumber": { "type": ["string", "null"] },
+              "PublicationUrl": { "type": ["string", "null"] },
+              "Authors": { "type": ["string", "null"] },
               "Description": { "type": "string" }
-            }
+            },
+            "required": [
+              "PublicationTitle",
+              "Publisher",
+              "PublicationNumber",
+              "PublicationUrl",
+              "Authors",
+              "Description"
+            ]
           }
         },
         "CurrentLocation": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "City": { "type": "string" },
-              "State": { "type": "string" },
-              "StateIsoCode": { "type": "string" },
+              "City": { "type": ["string", "null"] },
+              "State": { "type": ["string", "null"] },
+              "StateIsoCode": { "type": ["string", "null"] },
               "Country": { "type": "string" },
               "CountryCode": {
                 "type": "object",
@@ -422,20 +562,28 @@
                   "IsoAlpha2": { "type": "string" },
                   "IsoAlpha3": { "type": "string" },
                   "UNCode": { "type": "string" }
-                }
+                },
+                "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
               }
-            }
+            },
+            "required": [
+              "City",
+              "State",
+              "StateIsoCode",
+              "Country",
+              "CountryCode"
+            ]
           }
         },
         "PreferredLocation": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "City": { "type": "string" },
-              "State": { "type": "string" },
-              "StateIsoCode": { "type": "string" },
+              "City": { "type": ["string", "null"] },
+              "State": { "type": ["string", "null"] },
+              "StateIsoCode": { "type": ["string", "null"] },
               "Country": { "type": "string" },
               "CountryCode": {
                 "type": "object",
@@ -444,119 +592,226 @@
                   "IsoAlpha2": { "type": "string" },
                   "IsoAlpha3": { "type": "string" },
                   "UNCode": { "type": "string" }
-                }
+                },
+                "required": ["IsoAlpha2", "IsoAlpha3", "UNCode"]
               }
-            }
+            },
+            "required": [
+              "City",
+              "State",
+              "StateIsoCode",
+              "Country",
+              "CountryCode"
+            ]
           }
         },
-        "Availability": { "type": "string" },
-        "Hobbies": { "type": "string" },
-        "Objectives": { "type": "string" },
-        "Achievements": { "type": "string" },
+        "Availability": { "type": ["string", "null"] },
+        "Hobbies": { "type": ["string", "null"] },
+        "Objectives": { "type": ["string", "null"] },
+        "Achievements": { "type": ["string", "null"] },
         "SegregatedAchievement": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "AwardTitle": { "type": "string" },
-              "Issuer": { "type": "string" },
-              "AssociatedWith": { "type": "string" },
-              "IssuingDate": { "type": "string" },
-              "Description": { "type": "string" }
-            }
+              "Issuer": { "type": ["string", "null"] },
+              "AssociatedWith": { "type": ["string", "null"] },
+              "IssuingDate": { "type": ["string", "null"] },
+              "Description": { "type": ["string", "null"] }
+            },
+            "required": [
+              "AwardTitle",
+              "Issuer",
+              "AssociatedWith",
+              "IssuingDate",
+              "Description"
+            ]
           }
         },
-        "References": { "type": "string" },
-        "CustomFields": { "type": "string" },
+        "References": { "type": ["string", "null"] },
+        "CustomFields": { "type": ["string", "null"] },
         "EmailInfo": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
-            "EmailTo": { "type": "string" },
-            "EmailBody": { "type": "string" },
-            "EmailReplyTo": { "type": "string" },
-            "EmailSignature": { "type": "string" },
-            "EmailFrom": { "type": "string" },
-            "EmailSubject": { "type": "string" },
-            "EmailCC": { "type": "string" }
-          }
+            "EmailTo": { "type": ["string", "null"] },
+            "EmailBody": { "type": ["string", "null"] },
+            "EmailReplyTo": { "type": ["string", "null"] },
+            "EmailSignature": { "type": ["string", "null"] },
+            "EmailFrom": { "type": ["string", "null"] },
+            "EmailSubject": { "type": ["string", "null"] },
+            "EmailCC": { "type": ["string", "null"] }
+          },
+          "required": [
+            "EmailTo",
+            "EmailBody",
+            "EmailReplyTo",
+            "EmailSignature",
+            "EmailFrom",
+            "EmailSubject",
+            "EmailCC"
+          ]
         },
         "Recommendations": {
-          "type": "array",
+          "type": ["array", "null"],
           "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "PersonName": { "type": "string" },
               "CompanyName": { "type": "string" },
-              "Relation": { "type": "string" },
+              "Relation": { "type": ["string", "null"] },
               "PositionTitle": { "type": "string" },
-              "Description": { "type": "string" }
-            }
+              "Description": { "type": ["string", "null"] }
+            },
+            "required": [
+              "PersonName",
+              "CompanyName",
+              "Relation",
+              "PositionTitle",
+              "Description"
+            ]
           }
         },
-        "DetailResume": { "type": "string" },
-        "HtmlResume": { "type": "string" },
+        "DetailResume": { "type": ["string", "null"] },
+        "HtmlResume": { "type": ["string", "null"] },
         "CandidateImage": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
             "CandidateImageData": { "type": "string" },
             "CandidateImageFormat": { "type": "string" }
-          }
+          },
+          "required": ["CandidateImageData", "CandidateImageFormat"]
         },
         "TemplateOutput": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
-            "TemplateOutputFileName": { "type": "string" },
-            "TemplateOutputData": { "type": "string" }
-          }
+            "TemplateOutputFileName": { "type": ["string", "null"] },
+            "TemplateOutputData": { "type": ["string", "null"] }
+          },
+          "required": ["TemplateOutputFileName", "TemplateOutputData"]
         },
         "ApiInfo": {
-          "type": "object",
+          "type": ["object", "null"],
           "additionalProperties": false,
           "properties": {
-            "Metered": { "type": "string" },
-            "CreditLeft": { "type": "string" },
-            "AccountExpiryDate": { "type": "string" },
-            "BuildVersion": { "type": "string" }
-          }
+            "Metered": { "type": ["string", "null"] },
+            "CreditLeft": { "type": ["string", "null"] },
+            "AccountExpiryDate": { "type": ["string", "null"] },
+            "BuildVersion": { "type": ["string", "null"] }
+          },
+          "required": [
+            "Metered",
+            "CreditLeft",
+            "AccountExpiryDate",
+            "BuildVersion"
+          ]
         }
-      }
+      },
+      "required": [
+        "ResumeFileName",
+        "ResumeLanguage",
+        "ParsingDate",
+        "ResumeCountry",
+        "Name",
+        "DateOfBirth",
+        "Gender",
+        "FatherName",
+        "MotherName",
+        "MaritalStatus",
+        "Nationality",
+        "LanguageKnown",
+        "UniqueID",
+        "LicenseNo",
+        "PassportDetail",
+        "PanNo",
+        "VisaStatus",
+        "Email",
+        "PhoneNumber",
+        "WebSite",
+        "Address",
+        "Category",
+        "SubCategory",
+        "CurrentSalary",
+        "ExpectedSalary",
+        "Qualification",
+        "SegregatedQualification",
+        "Certification",
+        "SegregatedCertification",
+        "SkillBlock",
+        "SkillKeywords",
+        "SegregatedSkill",
+        "Experience",
+        "SegregatedExperience",
+        "CurrentEmployer",
+        "JobProfile",
+        "WorkedPeriod",
+        "GapPeriod",
+        "AverageStay",
+        "LongestStay",
+        "Summary",
+        "ExecutiveSummary",
+        "ManagementSummary",
+        "Coverletter",
+        "Publication",
+        "SegregatedPublication",
+        "CurrentLocation",
+        "PreferredLocation",
+        "Availability",
+        "Hobbies",
+        "Objectives",
+        "Achievements",
+        "SegregatedAchievement",
+        "References",
+        "CustomFields",
+        "EmailInfo",
+        "Recommendations",
+        "DetailResume",
+        "HtmlResume",
+        "CandidateImage",
+        "TemplateOutput",
+        "ApiInfo"
+      ]
     },
     "ResumeQuality": {
-      "type": "array",
+      "type": ["array", "null"],
       "items": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "Level": { "type": "string" },
+          "Level": { "type": ["string", "null"] },
           "Findings": {
-            "type": "array",
+            "type": ["array", "null"],
             "items": {
               "type": "object",
               "additionalProperties": false,
               "properties": {
-                "QualityCode": { "type": "string" },
+                "QualityCode": { "type": ["string", "null"] },
                 "SectionIdentifiers": {
-                  "type": "array",
+                  "type": ["array", "null"],
                   "items": {
                     "type": "object",
                     "additionalProperties": false,
                     "properties": {
                       "SectionType": { "type": "string" },
                       "Id": { "type": "string" }
-                    }
+                    },
+                    "required": ["SectionType", "Id"]
                   }
                 },
-                "Message": { "type": "string" }
-              }
+                "Message": { "type": ["string", "null"] }
+              },
+              "required": ["QualityCode", "SectionIdentifiers", "Message"]
             }
           }
-        }
+        },
+        "required": ["Level", "Findings"]
       }
     }
-  }
+  },
+  "required": ["ResumeParserData", "ResumeQuality"]
 }
