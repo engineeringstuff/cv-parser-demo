@@ -185,12 +185,13 @@ export const setupRoutes = (app: OpenAPIHono<{ Bindings: Env }>): void => {
         },
       ];
 
+      // See https://platform.openai.com/docs/guides/structured-outputs?example=ui-generation&type-restrictions=string-restrictions#supported-schemas
       const options: ChatCompletionCreateParamsNonStreaming = {
         model: model || "gpt-5-mini",
         messages: input,
         response_format: {
           type: "json_schema",
-          json_schema: { name: "resume", schema },
+          json_schema: { name: "resume", schema, strict: true },
         },
         // service_tier: "flex",
       };
