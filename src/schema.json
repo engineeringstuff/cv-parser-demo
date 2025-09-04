@@ -203,6 +203,34 @@
                   }
                 }
               },
+              "SubInstitution": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "Name": { "type": "string" },
+                  "Type": { "type": "string" },
+                  "ConfidenceScore": { "type": "integer" },
+                  "Location": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "City": { "type": "string" },
+                      "State": { "type": "string" },
+                      "StateIsoCode": { "type": "string" },
+                      "Country": { "type": "string" },
+                      "CountryCode": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "IsoAlpha2": { "type": "string" },
+                          "IsoAlpha3": { "type": "string" },
+                          "UNCode": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
               "Degree": {
                 "type": "object",
                 "additionalProperties": false,
@@ -327,7 +355,19 @@
               "StartDate": { "type": "string" },
               "EndDate": { "type": "string" },
               "IsCurrentEmployer": { "type": "string" },
-              "JobDescription": { "type": "string" }
+              "JobDescription": { "type": "string" },
+              "Projects": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "UsedSkills": { "type": "string" },
+                    "ProjectName": { "type": "string" },
+                    "TeamSize": { "type": "string" }
+                  }
+                }
+              }
             }
           }
         },
@@ -350,6 +390,21 @@
         "ManagementSummary": { "type": "string" },
         "Coverletter": { "type": "string" },
         "Publication": { "type": "string" },
+        "SegregatedPublication": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "PublicationTitle": { "type": "string" },
+              "Publisher": { "type": "string" },
+              "PublicationNumber": { "type": "string" },
+              "PublicationUrl": { "type": "string" },
+              "Authors": { "type": "string" },
+              "Description": { "type": "string" }
+            }
+          }
+        },
         "CurrentLocation": {
           "type": "array",
           "items": {
@@ -412,7 +467,95 @@
             }
           }
         },
-        "References": { "type": "string" }
+        "References": { "type": "string" },
+        "CustomFields": { "type": "string" },
+        "EmailInfo": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "EmailTo": { "type": "string" },
+            "EmailBody": { "type": "string" },
+            "EmailReplyTo": { "type": "string" },
+            "EmailSignature": { "type": "string" },
+            "EmailFrom": { "type": "string" },
+            "EmailSubject": { "type": "string" },
+            "EmailCC": { "type": "string" }
+          }
+        },
+        "Recommendations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "PersonName": { "type": "string" },
+              "CompanyName": { "type": "string" },
+              "Relation": { "type": "string" },
+              "PositionTitle": { "type": "string" },
+              "Description": { "type": "string" }
+            }
+          }
+        },
+        "DetailResume": { "type": "string" },
+        "HtmlResume": { "type": "string" },
+        "CandidateImage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "CandidateImageData": { "type": "string" },
+            "CandidateImageFormat": { "type": "string" }
+          }
+        },
+        "TemplateOutput": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "TemplateOutputFileName": { "type": "string" },
+            "TemplateOutputData": { "type": "string" }
+          }
+        },
+        "ApiInfo": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "Metered": { "type": "string" },
+            "CreditLeft": { "type": "string" },
+            "AccountExpiryDate": { "type": "string" },
+            "BuildVersion": { "type": "string" }
+          }
+        }
+      }
+    },
+    "ResumeQuality": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "Level": { "type": "string" },
+          "Findings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "QualityCode": { "type": "string" },
+                "SectionIdentifiers": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "SectionType": { "type": "string" },
+                      "Id": { "type": "string" }
+                    }
+                  }
+                },
+                "Message": { "type": "string" }
+              }
+            }
+          }
+        }
       }
     }
   }
